@@ -64,23 +64,17 @@ router.get("/:cuisine", async (req, res) => {
     const data = await Restaurant.find(
       {
         cuisine: cuisine,
-        borough: { $ne: "Brooklyn" },
+        city: { $ne: "Brooklyn" },
       },
       {
         _id: 0,
         cuisine: 1,
         name: 1,
-        borough: 1,
+        city: 1,
       },
     ).sort({ name: 1 });
 
-    const result = data.map((r) => ({
-      cuisines: r.cuisine,
-      name: r.name,
-      city: r.borough,
-    }));
-
-    res.json(result);
+    res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
