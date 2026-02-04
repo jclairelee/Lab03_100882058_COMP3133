@@ -15,4 +15,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get restaurants by cuisine
+router.get("/cuisine/:cuisine", async (req, res) => {
+  try {
+    const cuisine = req.params.cuisine;
+
+    const data = await Restaurant.find({ cuisine });
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
