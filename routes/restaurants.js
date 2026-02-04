@@ -56,4 +56,34 @@ router.get("/cuisine/:cuisine", async (req, res) => {
   }
 });
 
+// Delicatessen and not Brooklyn
+router.get("/:cuisine", async (req, res) => {
+  try {
+    const cuisine = req.params.cuisine;
+
+    const data = await Restaurant.find(
+      {
+        cuisine: cuisine,
+        borough: { $ne: "Brooklyn" },
+      },
+      {
+        _id: 0,
+        cuisine: 1,
+        name: 1,
+        borough: 1,
+      },
+    ).sort({ name: 1 });
+
+    const result = data.map((r) => ({
+      cuisines: r.cuisine,
+      name: r.name,
+      city: r.borough,
+    }));
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
