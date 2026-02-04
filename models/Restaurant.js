@@ -8,7 +8,7 @@ const RestaurantSchema = new mongoose.Schema(
       street: String,
       zipcode: String,
     },
-    borough: String,
+    city: String,
     cuisine: String,
     grades: [
       {
